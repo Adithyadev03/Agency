@@ -73,16 +73,64 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const getWhatsAppUrl = () => {
+    const projectLabels: Record<string, string> = {
+      "new-site": "Brand New Custom Website Build",
+      "redesign": "Complete Strategic Redesign Overhaul",
+      "consultation": "Bespoke Architectural Audit",
+      "maintenance": "On-demand Technical Maintenance",
+    };
+    const projectLabel = projectLabels[formData.projectType] || formData.projectType;
+    const text = `Hello Ravens.dev! I would like to discuss a project.
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Project Type:* ${projectLabel}
+*Brief:* ${formData.message}`;
+    return `https://wa.me/918301991822?text=${encodeURIComponent(text)}`;
+  };
+
+  const getMailtoUrl = () => {
+    const projectLabels: Record<string, string> = {
+      "new-site": "Brand New Custom Website Build",
+      "redesign": "Complete Strategic Redesign Overhaul",
+      "consultation": "Bespoke Architectural Audit",
+      "maintenance": "On-demand Technical Maintenance",
+    };
+    const projectLabel = projectLabels[formData.projectType] || formData.projectType;
+    const subject = `New Project Inquiry from ${formData.name}`;
+    const body = `Hello Ravens.dev!
+
+I would like to discuss a project.
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Project Type:* ${projectLabel}
+*Brief:* ${formData.message}
+
+Best regards,
+${formData.name}`;
+    return `mailto:adithyadevm2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
     setLoading(true);
-    // Simulate real server delivery
+    const waUrl = getWhatsAppUrl();
+
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-    }, 1500);
+      
+      // Attempt to open WhatsApp in a new window/tab
+      try {
+        window.open(waUrl, "_blank", "noopener,noreferrer");
+      } catch (err) {
+        console.error("Popup blocked or failed to open", err);
+      }
+    }, 1200);
   };
 
   const contactGateways = [
@@ -267,14 +315,14 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={loading}
-                        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-[#050505] hover:bg-zinc-200 hover:shadow-xl hover:shadow-white/5 active:scale-95 font-semibold text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 group clickable ml-auto"
+                        className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white text-[#050505] hover:bg-zinc-200 hover:shadow-xl hover:shadow-white/5 active:scale-95 font-semibold text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 group clickable ml-auto glow-btn"
                       >
                         {loading ? (
                           <div className="w-4 h-4 border-2 border-[#050505]/20 border-t-[#050505] rounded-full animate-spin" />
                         ) : (
                           <>
-                            <Send className="w-3.5 h-3.5 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                            <span>Dispatch Project Inquiry</span>
+                            <MessageCircle className="w-3.5 h-3.5 text-emerald-500 group-hover:scale-110 transition-transform" />
+                            <span>Dispatch to WhatsApp</span>
                           </>
                         )}
                       </button>
@@ -286,33 +334,53 @@ export default function Contact() {
                     key="success"
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex flex-col items-center justify-center text-center py-12"
+                    className="flex flex-col items-center justify-center text-center py-12 animate-fade-in"
                   >
-                    <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mb-6">
-                      <CheckCircle className="w-8 h-8 text-emerald-400" />
+                    <div className="w-16 h-16 rounded-full bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center mb-6 animate-pulse">
+                      <Sparkles className="w-8 h-8 text-indigo-400" />
                     </div>
 
                     <h3 className="text-3xl font-display font-extrabold text-white mb-2">
-                      Transmission Confirmed
+                      Transmission Formatted
                     </h3>
                     
-                    <p className="text-sm text-indigo-400 font-medium font-mono mb-4">
-                      TRANSMITTED SECURELY TO: adithyadevm4@gmail.com
+                    <p className="text-sm text-indigo-400 font-medium font-mono mb-4 tracking-wider">
+                      TARGET: +91 83019 91822 // adithyadevm2@gmail.com
                     </p>
 
                     <p className="text-zinc-400 text-xs sm:text-sm max-w-md leading-relaxed font-sans mb-8">
-                      Thank you <strong className="text-white">{formData.name}</strong>. Your project brief has been logged. Adithyadev M. will reply with proposed consultation dates shortly.
+                      Thank you <strong className="text-white">{formData.name}</strong>. Your project brief has been formatted. Choose your preferred secure channel below to dispatch it immediately:
                     </p>
 
-                    <button
-                      onClick={() => {
-                        setSubmitted(false);
-                        setFormData({ name: "", email: "", projectType: "new-site", message: "" });
-                      }}
-                      className="px-6 py-2.5 rounded-full border border-white/10 hover:border-purple-500/30 text-xs font-semibold text-zinc-300 hover:text-white uppercase tracking-wider transition-colors clickable"
-                    >
-                      Lodge Another Brief
-                    </button>
+                    <div className="flex flex-col sm:flex-row items-center gap-4 flex-wrap justify-center">
+                      <a
+                        href={getWhatsAppUrl()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs tracking-wider uppercase rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/10 flex items-center gap-2 clickable"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Send via WhatsApp</span>
+                      </a>
+
+                      <a
+                        href={getMailtoUrl()}
+                        className="px-6 py-3 bg-white text-[#050505] hover:bg-zinc-200 font-semibold text-xs tracking-wider uppercase rounded-full transition-all duration-300 shadow-lg shadow-white/5 flex items-center gap-2 clickable glow-btn"
+                      >
+                        <Mail className="w-4 h-4 text-indigo-500" />
+                        <span>Draft via Email</span>
+                      </a>
+
+                      <button
+                        onClick={() => {
+                          setSubmitted(false);
+                          setFormData({ name: "", email: "", projectType: "new-site", message: "" });
+                        }}
+                        className="px-5 py-3 rounded-full border border-white/10 hover:border-purple-500/30 text-xs font-semibold text-zinc-400 hover:text-white uppercase tracking-wider transition-colors clickable"
+                      >
+                        Lodge Another
+                      </button>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

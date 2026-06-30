@@ -17,15 +17,41 @@ export default function FreePreview() {
     { value: "landing", label: "High-convert Page" },
   ];
 
+  const getMailtoUrl = () => {
+    const businessLabel = businessOptions.find(opt => opt.value === businessType)?.label || businessType;
+    const subject = `Free Website Concept Request for ${businessName}`;
+    const body = `Hello Ravens.dev!
+
+I would like to request a free homepage design concept for my business.
+
+*Business Name:* ${businessName}
+*Target Niche/Objective:* ${businessLabel}
+*Contact Email:* ${email}
+
+Please let me know if you need any additional brand collateral (logos, style guides, references) to prepare the high-fidelity concept.
+
+Best regards,
+${businessName}`;
+    return `mailto:adithyadevm2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !businessName) return;
 
     setLoading(true);
-    // Simulate real database or email dispatch lag
+    const mailtoUrl = getMailtoUrl();
+
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
+
+      // Attempt to automatically trigger the mailto client open
+      try {
+        window.location.href = mailtoUrl;
+      } catch (err) {
+        console.error("Failed to automatically launch email client", err);
+      }
     }, 1200);
   };
 
@@ -159,35 +185,44 @@ export default function FreePreview() {
                 key="success-view"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="py-10 flex flex-col items-center justify-center text-center"
+                className="py-10 flex flex-col items-center justify-center text-center animate-fade-in"
               >
-                <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mb-6">
-                  <CheckCircle className="w-8 h-8 text-emerald-400" />
+                <div className="w-16 h-16 rounded-full bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center mb-6 animate-pulse">
+                  <Sparkles className="w-8 h-8 text-indigo-400" />
                 </div>
 
                 <h3 className="text-3xl font-display font-extrabold text-white mb-2">
-                  Request Dispatched!
+                  Draft Draft Formatted!
                 </h3>
                 
-                <p className="text-sm text-indigo-400 font-medium font-mono mb-4">
-                  PREVIEW PROJECT REFERENCE: #{Math.floor(100000 + Math.random() * 900000)}
+                <p className="text-sm text-indigo-400 font-medium font-mono mb-4 tracking-wider">
+                  PREPARED TO DISPATCH TO: adithyadevm2@gmail.com
                 </p>
 
                 <p className="text-zinc-400 text-xs sm:text-sm max-w-md leading-relaxed font-sans mb-8">
-                  Adithyadev M. is already reviewing your brand concept request for{" "}
-                  <strong className="text-white">{businessName}</strong>. Expect your high-fidelity preview links in your inbox (<strong className="text-white">{email}</strong>) shortly.
+                  Your homepage mockup request for <strong className="text-white">{businessName}</strong> has been formatted as an email draft. If your email application didn't open automatically, click the button below to send it now!
                 </p>
 
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setEmail("");
-                    setBusinessName("");
-                  }}
-                  className="px-6 py-2.5 rounded-full border border-white/10 hover:border-purple-500/30 text-xs font-semibold text-zinc-300 hover:text-white uppercase tracking-wider transition-colors clickable"
-                >
-                  Request Another Design Draft
-                </button>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <a
+                    href={getMailtoUrl()}
+                    className="px-8 py-3.5 rounded-full bg-white text-[#050505] hover:bg-zinc-200 hover:shadow-xl hover:shadow-white/5 active:scale-95 font-semibold text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2 group clickable glow-btn"
+                  >
+                    <Send className="w-3.5 h-3.5 text-indigo-500 group-hover:scale-110 transition-transform" />
+                    <span>Launch Mail Client</span>
+                  </a>
+
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setEmail("");
+                      setBusinessName("");
+                    }}
+                    className="px-6 py-3.5 rounded-full border border-white/10 hover:border-purple-500/30 text-xs font-semibold text-zinc-300 hover:text-white uppercase tracking-wider transition-colors clickable"
+                  >
+                    Request Another Design Draft
+                  </button>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

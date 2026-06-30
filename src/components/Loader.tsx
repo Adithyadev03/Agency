@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 export default function Loader({ onComplete }: { onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
   const [textIndex, setTextIndex] = useState(0);
-  const loadingTexts = ["PREPARING SPACE", "TRANSLATING IDEAS", "ENGINEERING PERFECTION", "ESTABLISHING CHANNELS", "STUDIO DEV READY"];
+  const loadingTexts = ["PREPARING SPACE", "TRANSLATING IDEAS", "ENGINEERING PERFECTION", "ESTABLISHING CHANNELS", "RAVENS DEV READY"];
 
   useEffect(() => {
     // Staggered text change
@@ -61,7 +61,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-4xl sm:text-6xl font-display font-bold tracking-tight text-white flex items-center gap-3"
             >
-              STUDIO<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
+              RAVENS<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
             </motion.h1>
           </div>
 

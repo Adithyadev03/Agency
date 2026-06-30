@@ -58,7 +58,7 @@ export default function Navbar() {
             }}
           >
             <span className="text-xl font-display font-bold tracking-tight text-white">
-              STUDIO<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
+              RAVENS<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:scale-150 transition-transform duration-300" />
           </motion.a>

@@ -24,7 +24,7 @@ export default function Footer() {
               className="inline-flex items-center gap-1.5 group clickable mb-3"
             >
               <span className="text-xl font-display font-bold tracking-tight text-white">
-                STUDIO<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
+                RAVENS<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 font-sans">.DEV</span>
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:scale-150 transition-transform duration-300" />
             </a>
@@ -85,7 +85,7 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <div className="flex flex-col gap-1">
             <p className="text-[10px] font-mono tracking-wide text-zinc-600 uppercase">
-              STUDIO DEV © {currentYear} // ALL RIGHTS RESERVED
+              RAVENS DEV © {currentYear} // ALL RIGHTS RESERVED
             </p>
             <p className="text-[9px] font-mono text-zinc-700 tracking-wider">
               NIT ROURKELA, ODISHA, INDIA // HANDCRAFTED WITH PRECISION

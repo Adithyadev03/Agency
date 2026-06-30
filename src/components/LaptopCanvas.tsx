@@ -690,7 +690,7 @@ export default function LaptopCanvas() {
         ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
         ctx.font = '6px "JetBrains Mono"';
         ctx.textAlign = "center";
-        ctx.fillText("DEVSTUDIO", logoProj.x, logoProj.y + 2);
+        ctx.fillText("RAVENS", logoProj.x, logoProj.y + 2);
       }
 
       // 4. Render FOREGROUND objects (depth: z2 <= laptopDepth)
